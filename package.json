@@ -1,0 +1,72 @@
+{
+  "name": "@lablm/contracts",
+  "version": "0.1.0",
+  "description": "Shared wire contracts (zod schemas) for LabLM, consumed by backend, machine, and web",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./backend/iam": {
+      "types": "./dist/backend/iam/index.d.ts",
+      "import": "./dist/backend/iam/index.js",
+      "default": "./dist/backend/iam/index.js"
+    },
+    "./backend/ndrive": {
+      "types": "./dist/backend/ndrive/index.d.ts",
+      "import": "./dist/backend/ndrive/index.js",
+      "default": "./dist/backend/ndrive/index.js"
+    },
+    "./backend/lm-service": {
+      "types": "./dist/backend/lm-service/index.d.ts",
+      "import": "./dist/backend/lm-service/index.js",
+      "default": "./dist/backend/lm-service/index.js"
+    },
+    "./backend/machine": {
+      "types": "./dist/backend/machine/index.d.ts",
+      "import": "./dist/backend/machine/index.js",
+      "default": "./dist/backend/machine/index.js"
+    },
+    "./machine-service/sim": {
+      "types": "./dist/machine-service/sim/index.d.ts",
+      "import": "./dist/machine-service/sim/index.js",
+      "default": "./dist/machine-service/sim/index.js"
+    },
+    "./machine-service/fms": {
+      "types": "./dist/machine-service/fms/index.d.ts",
+      "import": "./dist/machine-service/fms/index.js",
+      "default": "./dist/machine-service/fms/index.js"
+    },
+    "./machine-service/inference": {
+      "types": "./dist/machine-service/inference/index.d.ts",
+      "import": "./dist/machine-service/inference/index.js",
+      "default": "./dist/machine-service/inference/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node -e \"fs.rmSync('dist', { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }); fs.rmSync('tsconfig.tsbuildinfo', { force: true, maxRetries: 5, retryDelay: 100 });\" && tsc",
+    "dev": "tsc --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "lint": "pnpm run architecture:check",
+    "architecture:check": "node scripts/check-architecture.mjs",
+    "test": "node --test tests/*.test.cjs",
+    "verify": "pnpm run architecture:check && pnpm run typecheck && pnpm run test"
+  },
+  "peerDependencies": {
+    "zod": ">=4"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "zod": "^4.4.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cmpe-netlab41/lablm-contracts.git"
+  }
+}
